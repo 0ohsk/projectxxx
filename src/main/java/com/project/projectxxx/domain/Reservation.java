@@ -2,8 +2,8 @@ package com.project.projectxxx.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.apache.logging.log4j.util.Lazy;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -12,13 +12,18 @@ public class Reservation {
     @Id @GeneratedValue
     @Column(name = "reservation_id")
     private Long id;
+
     private Date reservationDate;
+
     private int price;
+
     private int totalPrice;
-    @Embedded
-    private Period period;
+
     @Enumerated(EnumType.STRING)
     private CheckStatus status;
-    @OneToMany(mappedBy = "reservationList_id")
-    private Reservation reservation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
 }

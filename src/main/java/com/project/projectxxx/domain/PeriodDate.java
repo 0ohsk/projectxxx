@@ -8,14 +8,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Embeddable
-public class Period {
+public class PeriodDate {
     @Temporal(TemporalType.DATE)
     Date startDate;
     @Temporal(TemporalType.DATE)
     Date endDate;
-
-    LocalDateTime startTime;
-
-    LocalDateTime endTime;
-
 }
