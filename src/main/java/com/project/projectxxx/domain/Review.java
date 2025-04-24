@@ -29,10 +29,6 @@ public class Review {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    private Room room;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accomodation_id")
     private Accomodation accomodation;
 }

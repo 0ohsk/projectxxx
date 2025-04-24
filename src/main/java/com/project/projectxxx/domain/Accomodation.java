@@ -1,6 +1,7 @@
 package com.project.projectxxx.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class Accomodation {
 
     private float rate;
 
+    @OneToMany(mappedBy = "accomodation" ,cascade = CascadeType.ALL)
+    private List<Room> rooms = new ArrayList<>();
+
     @OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL)
-    private List<Room> room = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 }

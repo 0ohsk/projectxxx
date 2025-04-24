@@ -24,7 +24,7 @@ public class Room {
     private String feature;
 
     @OneToMany(mappedBy = "room",cascade = CascadeType.ALL)
-    private List<Reservation> reservation = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accomodation_id")
@@ -34,15 +34,8 @@ public class Room {
     @JoinColumn(name = "host_id")
     private Host host;
 
-//    public void Reservation(Reservation reservation){
-//        this.reservation = reservation;
-//
-//
-//    }
-
-    public void Accomodation(Accomodation accomodation){
-        this.accomodation = accomodation;
-        accomodation.getRoom().add(this);
+    public void reservation(Reservation reservation){
+        this.reservations.add(reservation);
+        reservation.setRoom(this);
     }
-
 }
