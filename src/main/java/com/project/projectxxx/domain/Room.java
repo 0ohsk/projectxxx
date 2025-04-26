@@ -3,13 +3,14 @@ package com.project.projectxxx.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dType")
 public class Room {
     @Id @GeneratedValue
     @Column(name = "room_id")
@@ -22,6 +23,15 @@ public class Room {
     private int price;
 
     private String feature;
+
+    @Enumerated(value = EnumType.STRING)
+    private UsingType usingType;
+
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     @OneToMany(mappedBy = "room",cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
