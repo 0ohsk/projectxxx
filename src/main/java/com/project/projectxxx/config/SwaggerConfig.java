@@ -1,4 +1,4 @@
-package com.project.projectxxx;
+package com.project.projectxxx.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

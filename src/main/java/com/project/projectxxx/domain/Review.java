@@ -20,6 +20,7 @@ public class Review {
 
     private int hierarchy;
 
+    @Column(name = "orders")
     private int order;
 
     private int groupNum;

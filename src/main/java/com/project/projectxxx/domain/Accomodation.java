@@ -22,7 +22,7 @@ public class Accomodation {
 
     private float rate;
 
-    @OneToMany(mappedBy = "accomodation" ,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL)
     private List<Room> rooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL)

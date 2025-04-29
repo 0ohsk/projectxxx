@@ -11,14 +11,15 @@ import java.util.List;
 @Entity
 public class User {
     @Id @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "user_id",unique = true)
     private Long id;
-    private String password;
     private String name;
+    private String password;
+    private String role;
     private int number;
     private Date createDate;
     private Date loginDate;
 
     @OneToMany(mappedBy = "user")
-    private List<ReservationList> list = new ArrayList<>();
+    private List<Reservation> list = new ArrayList<>();
 }
