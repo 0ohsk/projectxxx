@@ -3,8 +3,8 @@ package com.project.projectxxx.controller;
 import com.project.projectxxx.domain.User;
 import com.project.projectxxx.dto.UserDTO;
 import com.project.projectxxx.service.LoginService;
-import com.project.projectxxx.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,12 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@Tag(name = "LoginController", description = "LoginController입니다")
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
     private final LoginService loginService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Operation(summary = "로그인", description = "로그인기능입니다")
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<?>> login(@RequestBody LoginRequest loginrequest, HttpSession session){
         User user = loginService.login(loginrequest.getName());
