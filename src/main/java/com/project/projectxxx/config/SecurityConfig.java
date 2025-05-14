@@ -19,8 +19,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .csrf(AbstractHttpConfigurer :: disable)
+                .formLogin(AbstractHttpConfigurer :: disable)   //로그인요청 시큐리티 말고 온전히 컨트롤러에게 위임
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/","/hello","/login","/save/**",
+                        .requestMatchers("/","/hello","/login","/users/**",
                                 "/swagger-ui.html","/swagger-ui/**","/v3/api-docs/**").permitAll()  //루트와 로그인은 모두가 접근해야함
                         .requestMatchers("/admin").hasRole("ADMIN") //특정한 롤이 있으면(여기서는 ADMIN)이 있으면 접근
                         .requestMatchers("/my/**").hasAnyRole("ADMIN","USER")//여러가지 롤이 있으면 접근가능 별표시는 my뒤에 어떤 경로가 와도 되게 하기 위해

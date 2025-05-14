@@ -1,7 +1,6 @@
 package com.project.projectxxx.controller;
 
 import com.project.projectxxx.domain.User;
-import com.project.projectxxx.dto.UserDTO;
 import com.project.projectxxx.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDateTime;
+
 @Tag(name = "LoginController", description = "LoginController입니다")
 @Controller
 @RequiredArgsConstructor
@@ -25,20 +26,19 @@ public class LoginController {
 
     @Operation(summary = "로그인", description = "로그인기능입니다")
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<?>> login(@RequestBody LoginRequest loginrequest, HttpSession session){
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginrequest, HttpSession session){
         User user = loginService.login(loginrequest.getName());
         if (user == null){
-            ApiResponse<?> fail = new ApiResponse<>(false, "아이디가 존재하지 않습니다", null);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(fail);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         if(!bCryptPasswordEncoder.matches(loginrequest.getPassword(), user.getPassword())){
-            ApiResponse<?> fail = new ApiResponse<>(false,"비밀번호가 틀렸습니다",null);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(fail);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        user.setLoginDate(LocalDateTime.now());
+        loginService.updateLoginDate(user);
         session.setAttribute("LOGIN_USER",user);
-        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getPassword());
-        ApiResponse<UserDTO> success = new ApiResponse<>(true,"로그인 성공",userDTO);
-        return ResponseEntity.ok(success);
+        UserLoginDTO userLoginDTO = new UserLoginDTO(user.getId(), user.getName(), user.getPassword(),user.getLoginDate());
+        return ResponseEntity.ok(userLoginDTO);
     }
     @Data
     static class LoginRequest {
@@ -47,9 +47,10 @@ public class LoginController {
     }
     @Data
     @AllArgsConstructor
-    static class ApiResponse<T>{
-        private boolean success;
-        private String message;
-        private T data;
+    static class UserLoginDTO{
+        private Long id;
+        private String name;
+        private String password;
+        private LocalDateTime loginDate;
     }
 }

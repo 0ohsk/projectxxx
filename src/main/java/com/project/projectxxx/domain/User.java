@@ -1,10 +1,11 @@
 package com.project.projectxxx.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,9 +18,14 @@ public class User {
     private String password;
     private String role;
     private int number;
-    private Date createDate;
-    private Date loginDate;
+    private LocalDateTime createDate;
+    private LocalDateTime loginDate;
 
     @OneToMany(mappedBy = "user")
     private List<Reservation> list = new ArrayList<>();
+
+    @PrePersist
+    public void createdDate(){
+        this.createDate = LocalDateTime.now();
+    }
 }

@@ -2,9 +2,8 @@ package com.project.projectxxx.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.apache.logging.log4j.util.Lazy;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -13,7 +12,10 @@ public class Reservation {
     @Column(name = "reservation_id")
     private Long id;
 
-    private Date reservationDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
+    private int capacity;
 
     private int price;
 
@@ -29,5 +31,4 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
-
 }
